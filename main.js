@@ -2,6 +2,7 @@ paddle1 = 10;
 paddle2 = 10;
 
 paddle1X = 10;
+paddle2X = 680;
 
 paddle1Y = '';
 paddle2Y = 685;
@@ -63,22 +64,24 @@ function draw(){
   stroke("black");
   rect(0,0,20,700);
 
-  //Chamar a função paddleInCanvas() 
-  paddleInCanvas();
+  //Chamar a função paddle1InCanvas()  e paddle2InCanvas
+  paddle1InCanvas();
+  paddle2InCanvas();
 
   //Raquete do jogador
   fill(250,0,0);
   stroke(0,0,250);
   strokeWeight(0.5);
-  paddle1Y = mouseY; 
+  paddle1Y = yCameraBloco1; 
   rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
 
 
   //Raquete do computador
   fill("#FFA500");
   stroke("#FFA500");
-  paddle2y =ball.y-paddle2Height/2;  
-  rect(paddle2Y,paddle2y,paddle2,paddle2Height,100);
+  strokeWeight(0.5);
+  paddle2Y = yCameraBloco2;
+  rect(paddle2X,paddle2Y,paddle2,paddle2Height,100);
 
   //Chamar a função midline()
   midline();
@@ -92,36 +95,36 @@ function draw(){
   //Chamar a função move() (muito importante para o jogo)
   move();
 
-  background("#808080");
+  //background("#808080");
 
-  movimentarBloco1();
+  // movimentarBloco1();
 
-  movimentarBloco2();
+  // movimentarBloco2();
 }
 
-function movimentarBloco1(){
+// function movimentarBloco1(){
 
-  if(yCameraBloco1 < 100 && yBloco1 > 0){
-    yBloco1 = yBloco1-2;
-  }
-  if(yCameraBloco1 > 100 && yBloco1 < 500){
-    yBloco1 = yBloco1+2;
-  }
+//   if(yCameraBloco1 < 100 && yBloco1 > 0){
+//     yBloco1 = yBloco1-2;
+//   }
+//   if(yCameraBloco1 > 100 && yBloco1 < 500){
+//     yBloco1 = yBloco1+2;
+//   }
 
-  rect(0,yBloco1,30,60);
-}
+//   rect(0,yBloco1,30,60);
+// }
 
-function movimentarBloco2(){
+// function movimentarBloco2(){
 
-  if(yCameraBloco2 < 100 && yBloco2 > 0){
-    yBloco2 = yBloco2-2;
-  }
-  if(yCameraBloco2 > 100 && yBloco2 < 500){
-    yBloco2 = yBloco2+2;
-  }
+//   if(yCameraBloco2 < 100 && yBloco2 > 0){
+//     yBloco2 = yBloco2-2;
+//   }
+//   if(yCameraBloco2 > 100 && yBloco2 < 500){
+//     yBloco2 = yBloco2+2;
+//   }
 
-  rect(669, yBloco2, 30, 60);
-}
+//   rect(669, yBloco2, 30, 60);
+// }
 
 //Função reset() para quando a bola não colidir com a raquete
 function reset(){
@@ -150,9 +153,9 @@ function drawScore(){
     textSize(20);
     fill("red");
     stroke(250,0,0)
-    text("Jogador:",100,50)
+    text("Raquete 1:",100,50)
     text(playerscore,180,50);
-    text("Computador:",500,50)
+    text("Raquete 2:",500,50)
     text(pcscore,595,50)
 }
 
@@ -169,7 +172,7 @@ function move(){
        ball.dx=-ball.dx-0.5;       
    }
   if (ball.x-2.5*ball.r/2< 0){
-  if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
+  if (ball.y >= paddle1Y && ball.y <= paddle1Y + paddle1Height) {
     ball.dx = -ball.dx+0.5;
     playerscore++;
   }
@@ -181,7 +184,7 @@ function move(){
 }
 
 if(pcscore ==4){
-    fill("#FFA500");
+    fill("#1b1b32");
     stroke(0)
     rect(0,0,width,height-1);
     fill("white");
@@ -219,11 +222,19 @@ function gotPoses(result){
 }
 
 //Esta função ajuda a evitar que a raquete saia do canvas
-function paddleInCanvas(){
-  if(mouseY+paddle1Height > height){
-    mouseY=height-paddle1Height;
+function paddle1InCanvas(){
+  if(yCameraBloco1+paddle1Height > height){
+    yCameraBloco1=height-paddle1Height;
   }
-  if(mouseY < 0){
-    mouseY =0;
+  if(yCameraBloco1 < 0){
+    yCameraBloco1 =0;
+  }  
+}
+function paddle2InCanvas(){
+  if(yCameraBloco2+paddle2Height > height){
+    yCameraBloco2=height-paddle2Height;
+  }
+  if(yCameraBloco1 < 0){
+    yCameraBloco1 =0;
   }  
 }

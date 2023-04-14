@@ -4,7 +4,7 @@ body{
     text-align: center;
 }
 canvas{
-    border: 5px solid rgb(27, 27, 50);
+    border: 5px solid #1b1b32;
     border-radius: 10px;
 }
 #btnIns{
